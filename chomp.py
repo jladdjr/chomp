@@ -40,14 +40,7 @@ def add_food_diary_entry(food, calories):
     food_diary[time_key] = diary_entry
     write_food_diary(food_diary)
 
-
-def main():
-    parser = argparse.ArgumentParser(prog='chomp')
-    subparsers = parser.add_subparsers(help='eat command adds a meal to your food diary')
-    parser_eat = subparsers.add_parser('eat', help='eat command adds a meal to your food diary..')
-    parser_eat.add_argument('food', type=str, help='food that you ate')
-    args = parser.parse_args()
-
+def eat(args):
     food = args.food
 
     print(f'You ate {food}')
@@ -63,6 +56,26 @@ def main():
             print(f"Can't find calorie information for {food}")
     else:
         print("Not found!")
+
+def today(args):
+    print('report for today.. coming soon!')
+
+def main():
+    parser = argparse.ArgumentParser(prog='chomp')
+    subparsers = parser.add_subparsers(help='sub-command help')
+
+    # eat subparser
+    parser_eat = subparsers.add_parser('eat', help='adds a meal to your food diary..')
+    parser_eat.add_argument('food', type=str, help='food that you ate')
+    parser_eat.set_defaults(func=eat)
+
+    # today subparser
+    parser_today = subparsers.add_parser('today', help='get report of food eaten today')
+    parser_today.set_defaults(func=today)
+
+    args = parser.parse_args()
+    args.func(args)
+
 
 
 if __name__ == '__main__':
