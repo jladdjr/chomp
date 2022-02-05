@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from datetime import datetime
 from time import time
 
 from yaml import load, dump, Loader, Dumper
@@ -24,6 +25,11 @@ def write_food_diary(data):
     yaml_diary = dump(data, Dumper=Dumper)
     with open(DEFAULT_FOOD_DIARY, 'w') as f:
         f.write(yaml_diary)
+
+def get_beginning_of_day_timestamp():
+    today = datetime.today()
+    start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    return start_of_day.timestamp()
 
 def get_current_time_key():
     return str(int(time()))
@@ -49,7 +55,7 @@ def eat(args):
     if food in food_lib:
         food_details = food_lib[food]
         if 'cal' in food_details:
-            cal = food_details['cal']
+            cal = food_details['calories']
             print(f"you ate {cal} calories!")
             add_food_diary_entry(food, cal)
         else:
@@ -58,7 +64,21 @@ def eat(args):
         print("Not found!")
 
 def today(args):
-    print('report for today.. coming soon!')
+    food_diary = get_food_diary()
+    start_of_day = get_beginning_of_day_timestamp()
+
+    calorie_total = 0
+    for timestamp in food_diary:
+        print(f'found entry for {timestamp}')
+        if int(timestamp) < start_of_day:
+            print(' before today.. skipping')
+            continue
+        entry = food_diary[timestamp]
+        if 'calories' not in entry:
+            print(' missing calorie information.. skipping')
+            continue
+        calorie_total += entry['calories']
+    print(f'Total calories for the day: {calorie_total}')
 
 def main():
     parser = argparse.ArgumentParser(prog='chomp')
