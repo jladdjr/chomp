@@ -54,7 +54,7 @@ def eat(args):
     food_lib = get_food_library()
     if food in food_lib:
         food_details = food_lib[food]
-        if 'cal' in food_details:
+        if 'calories' in food_details:
             cal = food_details['calories']
             print(f"you ate {cal} calories!")
             add_food_diary_entry(food, cal)
