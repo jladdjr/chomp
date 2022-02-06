@@ -48,14 +48,18 @@ def add_food_diary_entry(food, calories):
 
 def eat(args):
     food = args.food
+    percent = args.percent
 
-    print(f'You ate {food}')
+    if percent == '1.0':
+        print(f'You ate {food}')
+    else:
+        print(f'You ate {100 * percent:.1f}% of {food}')
 
     food_lib = get_food_library()
     if food in food_lib:
         food_details = food_lib[food]
         if 'calories' in food_details:
-            cal = food_details['calories']
+            cal = int(food_details['calories'] * percent)
             print(f"you ate {cal} calories!")
             add_food_diary_entry(food, cal)
         else:
@@ -97,6 +101,8 @@ def main():
     # eat subparser
     parser_eat = subparsers.add_parser('eat', help='adds a meal to your food diary..')
     parser_eat.add_argument('food', type=str, help='food that you ate')
+    parser_eat.add_argument('--percent', type=float, default=1.0,
+                            help='specify a fraction of a standard portion (1.0)')
     parser_eat.set_defaults(func=eat)
 
     # today subparser
@@ -104,9 +110,10 @@ def main():
     parser_today.set_defaults(func=today)
 
     args = parser.parse_args()
-    args.func(args)
-
-
+    if 'func' not in args:
+        parser.print_help()
+    else:
+        args.func(args)
 
 if __name__ == '__main__':
     main()
