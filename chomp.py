@@ -133,8 +133,8 @@ def lookup_food(args):
     products = search_results['products']
 
     product_search_normalized = {}
-    max_product_length = 0
-    max_generic_length = 0
+    max_product_length = 1
+    max_generic_length = 1
     for i, prod in enumerate(products):
         product_name = prod.get('product_name', '').strip()
         generic_name = prod.get('generic_name', '').strip()
