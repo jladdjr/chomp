@@ -6,6 +6,8 @@ from time import time
 
 from yaml import load, dump, Loader, Dumper
 
+import openfoodfacts
+
 DEFAULT_FOOD_LIBRARY = "/home/jim/.chomp/food_library.yml"
 DEFAULT_FOOD_DIARY = "/home/jim/.chomp/food_diary.yml"
 DEFAULT_WEIGHT_DIARY = "/home/jim/.chomp/weight_diary.yml"
@@ -124,6 +126,32 @@ def weight(args):
     print(f"You weigh {weight} pounds!")
     add_weight_diary_entry(weight)
 
+def lookup_food(args):
+    food = args.food
+
+    search_results = openfoodfacts.products.search(food)
+    products = search_results['products']
+
+    product_search_normalized = {}
+    max_product_length = 0
+    max_generic_length = 0
+    for i, prod in enumerate(products):
+        product_name = prod.get('product_name', '').strip()
+        generic_name = prod.get('generic_name', '').strip()
+        if len(product_name) > max_product_length:
+            max_product_length = len(product_name)
+        if len(generic_name) > max_generic_length:
+            max_generic_length = len(generic_name)
+
+        product_search_normalized[i] = {'generic_name': generic_name,
+                                        'product_name': product_name}
+
+
+    print('Results')
+    for index, prod in product_search_normalized.items():
+        info_line = f"{index:3}    {prod['product_name']:{max_product_length}}   {prod['generic_name']:{max_generic_length}}"
+        print(info_line)
+
 def main():
     parser = argparse.ArgumentParser(prog='chomp')
     subparsers = parser.add_subparsers(help='sub-command help')
@@ -145,6 +173,13 @@ def main():
     parser_weight = subparsers.add_parser('weight', help="add today's weight")
     parser_weight.add_argument('weight', type=float, help="today's weight")
     parser_weight.set_defaults(func=weight)
+
+
+    # food lookup subparser
+    parser_food_lookup = subparsers.add_parser('list_foods',
+                                               help='get list of foods matching name or description')
+    parser_food_lookup.add_argument('food', type=str, help='name or description of food')
+    parser_food_lookup.set_defaults(func=lookup_food)
 
     args = parser.parse_args()
     if 'func' not in args:
