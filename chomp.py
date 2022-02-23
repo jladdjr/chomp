@@ -6,8 +6,9 @@ from time import time
 
 from yaml import load, dump, Loader, Dumper
 
-DEFAULT_FOOD_LIBRARY = "/home/jim/git/chomp/food_library.yml"
-DEFAULT_FOOD_DIARY = "/home/jim/git/chomp/food_diary.yml"
+DEFAULT_FOOD_LIBRARY = "/home/jim/.chomp/food_library.yml"
+DEFAULT_FOOD_DIARY = "/home/jim/.chomp/food_diary.yml"
+DEFAULT_WEIGHT_DIARY = "/home/jim/.chomp/weight_diary.yml"
 
 def get_food_library():
     with open(DEFAULT_FOOD_LIBRARY, 'r') as f:
@@ -25,6 +26,26 @@ def write_food_diary(data):
     yaml_diary = dump(data, Dumper=Dumper)
     with open(DEFAULT_FOOD_DIARY, 'w') as f:
         f.write(yaml_diary)
+
+def get_weight_diary():
+    with open(DEFAULT_WEIGHT_DIARY, 'r') as f:
+        data = load(f, Loader=Loader)
+    if data is None:
+        data = {}
+    return data
+
+def write_weight_diary(data):
+    yaml_diary = dump(data, Dumper=Dumper)
+    with open(DEFAULT_WEIGHT_DIARY, 'w') as f:
+        f.write(yaml_diary)
+
+def add_weight_diary_entry(weight):
+    weight_diary = get_weight_diary()
+
+    time_key = get_current_time_key()
+    diary_entry = {'weight': weight}
+    weight_diary[time_key] = diary_entry
+    write_weight_diary(weight_diary)
 
 def get_beginning_of_day_timestamp():
     today = datetime.today()
@@ -98,6 +119,11 @@ def today(args):
     print()
     print(f'Total calories for the day: {calorie_total}')
 
+def weight(args):
+    weight = args.weight
+    print(f"You weigh {weight} pounds!")
+    add_weight_diary_entry(weight)
+
 def main():
     parser = argparse.ArgumentParser(prog='chomp')
     subparsers = parser.add_subparsers(help='sub-command help')
@@ -114,6 +140,11 @@ def main():
     # today subparser
     parser_today = subparsers.add_parser('today', help='get report of food eaten today')
     parser_today.set_defaults(func=today)
+
+    # weight subparser
+    parser_weight = subparsers.add_parser('weight', help="add today's weight")
+    parser_weight.add_argument('weight', type=float, help="today's weight")
+    parser_weight.set_defaults(func=weight)
 
     args = parser.parse_args()
     if 'func' not in args:
