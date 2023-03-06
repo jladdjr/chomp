@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import openfoodfacts
 
 from chomp.data_manager import (

@@ -15,3 +15,6 @@ lint: venv
 
 clean:
 	rm -rf venv
+
+build:
+	python3 -m build

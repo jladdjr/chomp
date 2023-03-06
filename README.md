@@ -1,3 +1,3 @@
 # chomp
 
-Command-line meal tracker
+Command-line calorie counter.

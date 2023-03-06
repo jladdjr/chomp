@@ -21,8 +21,8 @@ class FoodNotFoundException(Exception):
 
 def get_food(name):
     food_lib = get_food_library()
-    if food in food_lib:
-        return food_lib[food]
+    if name in food_lib:
+        return food_lib[name]
     raise FoodNotFoundException
 
 

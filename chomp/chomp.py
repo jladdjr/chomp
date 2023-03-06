@@ -45,7 +45,6 @@ def main():
     if "func" not in args:
         parser.print_help()
     else:
-        args.func(args)
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
