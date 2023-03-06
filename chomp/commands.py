@@ -30,7 +30,7 @@ def eat(food_name, weight=None, percent=1):
         else:
             print(f"Can't find calorie information for {food_name}")
     except FoodNotFoundException:
-        print(f"Cannot finnd {food_name}!")
+        print(f"Cannot find {food_name}!")
 
 
 def today():
