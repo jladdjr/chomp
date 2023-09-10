@@ -21,6 +21,9 @@ def main():
     parser_eat.add_argument(
         "--weight", type=float, default=None, help="(optional) specify weight"
     )
+    parser_eat.add_argument(
+        "--calories", type=float, default=None, help="(optional) specify calories"
+    )
     parser_eat.set_defaults(func=eat)
 
     # today subparser
@@ -47,7 +50,7 @@ def main():
     else:
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
-            eat(args.food, args.weight, args.percent)
+            eat(args.food, args.calories, args.weight, args.percent)
         elif args.func == today:
             today()
         elif args.func == weight:
