@@ -23,16 +23,16 @@ def today():
             # print(' before today.. skipping')
             continue
         entry = food_diary[timestamp]
-        if "calories" not in entry:
-            print(" missing calorie information.. skipping")
+        if "consumed" not in entry:
+            print(" missing food diary data for entry.. skipping")
             continue
 
         time_of_day = datetime.fromtimestamp(int(timestamp))
-        calories = entry["calories"]
+        consumed = entry["consumed"]
         food = entry["food"]
-        info_line = f"{time_of_day}    {food:39}   {calories:^7}"
+        info_line = f"{time_of_day}    {food:39}   {consumed['calories']:^7}"
         print(info_line)
 
-        calorie_total += entry["calories"]
+        calorie_total += consumed["calories"]
     print()
     print(f"Total calories for the day: {calorie_total}")

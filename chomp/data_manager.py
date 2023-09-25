@@ -29,14 +29,14 @@ def get_food(name):
 # food diary
 
 
-def add_food_diary_entry(food, calories):
+def add_food_diary_entry(food, food_data):
     """Reads in current food diary and adds a new time-stamped entry that includes:
     - food name (str)
-    - calories (int)
+    - food_data (dict)
     """
     food_diary = get_food_diary()
     time_key = get_current_time_key()
-    diary_entry = {"food": food, "calories": calories}
+    diary_entry = {"food": food, "consumed": food_data}
     food_diary[time_key] = diary_entry
     write_food_diary(food_diary)
 
