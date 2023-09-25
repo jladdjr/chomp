@@ -18,3 +18,9 @@ clean:
 
 build: venv
 	./venv/bin/python -m build
+
+install:
+	pip uninstall -y chomp
+	pip install dist/chomp-$$(grep version pyproject.toml | cut -f2 -d\")-py3-none-any.whl
+
+build_and_install: build install
