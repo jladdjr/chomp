@@ -1,6 +1,7 @@
 from yaml import load, dump, Loader, Dumper
 
 from chomp.utils import get_current_time_key
+from chomp.food import Food
 
 DEFAULT_FOOD_LIBRARY = "/home/jim/.chomp/food_library.yml"
 DEFAULT_FOOD_DIARY = "/home/jim/.chomp/food_diary.yml"
@@ -11,7 +12,12 @@ DEFAULT_WEIGHT_DIARY = "/home/jim/.chomp/weight_diary.yml"
 
 def get_food_library():
     with open(DEFAULT_FOOD_LIBRARY, "r") as f:
-        data = load(f, Loader)
+        items = load(f, Loader)
+    library = {}
+    for item in items:
+        if 'name' not in item:
+            continue
+        library['name'] = Food.from_dict(item)
     return data
 
 
@@ -29,14 +35,13 @@ def get_food(name):
 # food diary
 
 
-def add_food_diary_entry(food, food_data):
-    """Reads in current food diary and adds a new time-stamped entry that includes:
-    - food name (str)
-    - food_data (dict)
+def add_food_diary_entry(food):
+    """Reads in current food diary and adds a new time-stamped entry that includes
+    the food's nutritional data
     """
     food_diary = get_food_diary()
     time_key = get_current_time_key()
-    diary_entry = {"food": food, "consumed": food_data}
+    diary_entry = {"food": food}
     food_diary[time_key] = diary_entry
     write_food_diary(food_diary)
 

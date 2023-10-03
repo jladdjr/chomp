@@ -24,16 +24,19 @@ def today():
             # print(' before today.. skipping')
             continue
         entry = food_diary[timestamp]
-        if "consumed" not in entry:
+        if "food" not in entry:
             print(" missing food diary data for entry.. skipping")
             continue
 
         time_of_day = datetime.fromtimestamp(int(timestamp))
-        consumed = entry["consumed"]
         food = entry["food"]
-        info_line = f"{time_of_day}    {food:39}   {consumed['calories']:13}   {consumed.get('fat', 0):^7}"
+        name = food.name
+        calories = food.get_nutritional_fact('calories')
+        fat = food.get_nutritional_fact('fat') or 0
+        info_line = f"{time_of_day}    {name:39}   {calories:13}   {fat:^7}"
         print(info_line)
 
+        # TODO: Add support for summing food nutritional data
         combined_intake = _merge_nutritional_facts(combined_intake, consumed)
     print()
     print(f"Total calories for the day: {combined_intake['calories']}")
