@@ -4,8 +4,8 @@ class Food:
         self.brand = brand
         self.nutritional_facts = nutritional_facts
 
-    @class
-    def from_dict(d):
+    @classmethod
+    def from_dict(cls, d):
         if 'name' not in d:
             return None
         if 'brand' not in d:
@@ -18,6 +18,11 @@ class Food:
         nutritional_facts = d['nutritional_facts']
 
         return Food(name, brand, nutritional_facts)
+
+    def to_dict(self):
+        return {'name': self.name,
+                'brand': self.brand,
+                'nutritional_facts': self.nutritional_facts}
 
     def get_nutritional_fact(self, fact):
         """Traverses nutritional data tree to find food fact.
@@ -50,17 +55,64 @@ class Food:
                 return value
         return _get_nutritional_facts(fact, self.nutritional_facts)
 
+
     def __mul__(self, scale):
         """Scale nutritional data"""
-        facts = self.nutritional_facts
+        def _scale_nutritional_facts(facts, scale):
+            scaled_facts = dict()
 
-        scaled_facts = dict()
+            for key, value in facts.items():
+                if type(value) is dict:
+                    scaled_facts[key] = _scale_nutritional_facts(value, scale)
+                else:
+                    scaled_facts[key] = value * scale
+            return scaled_facts
 
-        for key, value in self.nutritional_facts.items():
-            if type(value) is dict:
-                scaled_facts[key] = _scale_nutritional_facts(value, scale)
-            else:
-                scaled_facts[key] = value * scale
+        scaled_facts = _scale_nutritional_facts(self.nutritional_facts, scale)
         return Food(self.name, self.brand, scaled_facts)
 
-    __rmul__ == __mul__
+    def __rmul__(self, *args, **kwargs):
+        return self.__mul__(*args, **kwargs)
+
+    def __add__(self, other):
+        if type(other) != Food:
+            raise Exception("Cannot add Food item with non-Food item")
+
+        def _merge_nutritional_facts(first_fact_set, second_fact_set):
+            # copy all entries from first_fact_set except nested dictionaries
+            combined_facts = {k:v for (k,v) in first_fact_set.items() if type(k) is not dict}
+
+            # merge in entries from second_fact_set, ignoring nested dictionaries
+            for key, value in second_fact_set.items():
+                if type(value) is dict:
+                    continue
+
+                if key not in combined_facts:
+                    combined_facts[key] = value
+                else:
+                    combined_facts[key] += value
+
+            # handle nested dictionaries
+            for key, value in first_fact_set.items():
+                if type(value) is not dict:
+                    continue
+                # determine if merge is required
+                if key in second_fact_set:
+                    other_value = second_fact_set[key]
+                    combined_facts[key] = _merge_nutritional_facts(value, other_value)
+                else:
+                    combined_facts[key] = value
+
+            for key, value in second_fact_set.items():
+                if type(value) is not dict:
+                    continue
+                # at this point, only need to handle cases where
+                # key is not in first_fact_set
+                if key not in first_fact_set:
+                    combined_facts[key] = value
+
+            return combined_facts
+
+        merged_nutritional_facts = _merge_nutritional_facts(self.nutritional_facts,
+                                                            other.nutritional_facts)
+        return Food('Combined Foods', '', merged_nutritional_facts)

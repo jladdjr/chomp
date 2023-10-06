@@ -17,8 +17,8 @@ def get_food_library():
     for item in items:
         if 'name' not in item:
             continue
-        library['name'] = Food.from_dict(item)
-    return data
+        library[item['name']] = Food.from_dict(item)
+    return library
 
 
 class FoodNotFoundException(Exception):

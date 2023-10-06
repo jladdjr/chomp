@@ -19,6 +19,6 @@ def eat(food_name, weight=None, percent=1):
         food = food * percent
         cal = food.get_nutritional_fact('calories')
         print(f"You ate {cal} calories!!")
-        add_food_diary_entry(food_name, food)
+        add_food_diary_entry(food.to_dict())
     except FoodNotFoundException:
         print(f"Cannot find {food_name}!")
