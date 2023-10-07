@@ -29,10 +29,10 @@ def today():
         time_of_day = datetime.fromtimestamp(int(timestamp))
         food = Food.from_dict(entry["food"])
         name = food.name
-        calories = food.get_nutritional_fact('calories')
-        fat = food.get_nutritional_fact('fat.total') or 0
-        protein = food.get_nutritional_fact('protein') or 0
-        carbs = food.get_nutritional_fact('carbohydrates.total') or 0
+        calories = round(food.get_nutritional_fact('calories'))
+        fat = round(food.get_nutritional_fact('fat.total') or 0)
+        protein = round(food.get_nutritional_fact('protein') or 0)
+        carbs = round(food.get_nutritional_fact('carbohydrates.total') or 0)
         lines.append([time_of_day, name, calories, fat, protein, carbs])
 
         if combined_intake is None:
@@ -44,10 +44,10 @@ def today():
     print()
 
     lines = [['Total Calories', 'Total Fat', 'Total Protein', 'Total Carbs']]
-    lines.append([combined_intake.get_nutritional_fact('calories'),
-                  combined_intake.get_nutritional_fact('fat.total'),
-                  combined_intake.get_nutritional_fact('protein'),
-                  combined_intake.get_nutritional_fact('carbohydrates.total')])
+    lines.append([round(combined_intake.get_nutritional_fact('calories')),
+                  round(combined_intake.get_nutritional_fact('fat.total')),
+                  round(combined_intake.get_nutritional_fact('protein')),
+                  round(combined_intake.get_nutritional_fact('carbohydrates.total'))])
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
 
     lines = [['Daily Calories', 'Daily Fat', 'Daily Protein', 'Daily Carbs'],
