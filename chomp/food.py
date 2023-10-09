@@ -1,3 +1,7 @@
+class MissingNutritionalData(Exception):
+    pass
+
+
 class Food:
     def __init__(self, name, brand, nutritional_facts):
         self.name = name
@@ -7,11 +11,11 @@ class Food:
     @classmethod
     def from_dict(cls, d):
         if 'name' not in d:
-            return None
+            raise MissingNutritionalData(f"'name' not provided for food entry: {d}")
         if 'brand' not in d:
-            return None
+            raise MissingNutritionalData(f"'brand' not provided for food entry: {d}")
         if 'nutritional_facts' not in d:
-            return None
+            raise MissingNutritionalData(f"'nutritional_facts' section missing for food entry: {d}")
 
         name = d['name']
         brand = d['brand']
