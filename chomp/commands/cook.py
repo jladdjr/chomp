@@ -1,0 +1,43 @@
+from chomp.data_manager import (
+    add_food_diary_entry,
+    get_food,
+    FoodNotFoundException,
+)
+
+
+def cook(recipe_name, ingredient_name, weight=None, percent=1):
+    new_recipe = False
+    try:
+        recipe = get_food(recipe_name)
+    except FoodNotFoundException:
+        print(f"Preparing new recipe for {recipe_name}!")
+        new_recipe = True
+
+    try:
+        ingredient = get_food(food_name)
+    except FoodNotFoundException:
+        print(f"Unable to find ingredient ({ingredient_name})")
+        return
+        
+    if weight:
+        ingredient_weight = ingredient.get_nutritional_fact('weight')
+        percent = weight / ingredient_weight
+        print(f"Adding {ingredient_weight} grams of {ingredient_name} to {recipe_name} recipe")
+    elif abs(percent - 1) > 0.001:
+        print(f"Adding {100 * percent:.1f}% of {ingredient_name} to {recipe_name} recipe")
+    else:
+        print(f"Adding {ingredient_name} to {recipe_name} recipe")
+
+    ingredient *= percent
+
+    if new_recipe:
+        recipe = ingredient
+        recipe.name = ingredient_name
+        recipe.brand = "(recipe)"
+        add_food_diary_entry(recipe.to_dict())
+    else:
+        recipe += ingredient
+        recipe.name = recipe_name
+        recipe.brand = "(recipe)"
+        
+    add_food_diary_entry(recipe.to_dict(), replace=true)

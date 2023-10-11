@@ -9,9 +9,8 @@ DEFAULT_WEIGHT_DIARY = "/home/jim/.chomp/weight_diary.yml"
 
 # food library
 
-
-def get_food_library():
-    with open(DEFAULT_FOOD_LIBRARY, "r") as f:
+def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
+    with open(library_file, "r") as f:
         items = load(f, Loader)
     library = {}
     for item in items:
@@ -21,11 +20,19 @@ def get_food_library():
     return library
 
 
+def add_food_library_entry(food:
+    food_diary = get_food_diary()
+    time_key = get_current_time_key()
+    diary_entry = {"food": food}
+    food_diary[time_key] = diary_entry
+    write_food_diary(food_diary)
+
+
 class FoodNotFoundException(Exception):
     pass
 
 
-def get_food(name):
+def get_food(name, library_file=DEFAULT_FOOD_LIBRARY):
     food_lib = get_food_library()
     if name in food_lib:
         return food_lib[name]
@@ -35,7 +42,7 @@ def get_food(name):
 # food diary
 
 
-def add_food_diary_entry(food):
+def add_food_diary_entry(food:
     """Reads in current food diary and adds a new time-stamped entry that includes
     the food's nutritional data
     """
@@ -54,9 +61,9 @@ def get_food_diary():
     return data
 
 
-def write_food_diary(data):
+def write_food_diary(library_file=DEFAULT_FOOD_LIBRARY, data):
     yaml_diary = dump(data, Dumper=Dumper)
-    with open(DEFAULT_FOOD_DIARY, "w") as f:
+    with open(library_file, "w") as f:
         f.write(yaml_diary)
 
 
