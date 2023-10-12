@@ -66,7 +66,7 @@ def get_food_diary():
     return data
 
 
-def write_food_diary(data, library_file=DEFAULT_FOOD_LIBRARY):
+def write_food_diary(data, library_file=DEFAULT_FOOD_DIARY):
     yaml_diary = dump(data, Dumper=Dumper)
     with open(library_file, "w") as f:
         f.write(yaml_diary)
