@@ -1,5 +1,5 @@
 from chomp.data_manager import (
-    add_food_diary_entry,
+    add_food_library_entry,
     get_food,
     FoodNotFoundException,
 )
@@ -18,7 +18,7 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
     except FoodNotFoundException:
         print(f"Unable to find ingredient ({ingredient_name})")
         return
-        
+
     if weight:
         ingredient_weight = ingredient.get_nutritional_fact('weight')
         percent = weight / ingredient_weight
@@ -39,5 +39,5 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
         recipe += ingredient
         recipe.name = recipe_name
         recipe.brand = "(recipe)"
-        
-    add_food_diary_entry(recipe.to_dict(), replace=true)
+
+    add_food_library_entry(recipe.to_dict(), replace=true)

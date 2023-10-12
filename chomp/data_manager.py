@@ -20,7 +20,7 @@ def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
     return library
 
 
-def add_food_library_entry(food:
+def add_food_library_entry(food):
     food_diary = get_food_diary()
     time_key = get_current_time_key()
     diary_entry = {"food": food}
@@ -42,7 +42,7 @@ def get_food(name, library_file=DEFAULT_FOOD_LIBRARY):
 # food diary
 
 
-def add_food_diary_entry(food:
+def add_food_diary_entry(food):
     """Reads in current food diary and adds a new time-stamped entry that includes
     the food's nutritional data
     """
