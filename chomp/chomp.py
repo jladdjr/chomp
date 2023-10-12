@@ -2,7 +2,7 @@
 
 import argparse
 
-from chomp.commands import eat, today, weight, lookup_food
+from chomp.commands import eat, cook, today, weight, lookup_food
 
 
 def main():
@@ -22,6 +22,21 @@ def main():
         "--weight", type=float, default=None, help="(optional) specify weight"
     )
     parser_eat.set_defaults(func=eat)
+
+    # cook subparser
+    parser_cook = subparsers.add_parser("cook", help="adds an ingredient to a recipe (starting a new recipe if needed)")
+    parser_cook.add_argument("recipe", type=str, help="name of recipe")
+    parser_cook.add_argument("ingredient", type=str, help="ingredient name (must exist in food library)")
+    parser_cook.add_argument(
+        "--percent",
+        type=float,
+        default=1.0,
+        help="(optional) specify portion of ingredient (where 1.0 is a std portion)",
+    )
+    parser_cook.add_argument(
+        "--weight", type=float, default=None, help="(optional) specify weight of ingredient"
+    )
+    parser_cook.set_defaults(func=cook)
 
     # today subparser
     parser_today = subparsers.add_parser("today", help="get report of food eaten today")
