@@ -14,7 +14,7 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
         new_recipe = True
 
     try:
-        ingredient = get_food(food_name)
+        ingredient = get_food(ingredient_name)
     except FoodNotFoundException:
         print(f"Unable to find ingredient ({ingredient_name})")
         return
@@ -32,12 +32,12 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
 
     if new_recipe:
         recipe = ingredient
-        recipe.name = ingredient_name
+        recipe.name = recipe_name
         recipe.brand = "(recipe)"
-        add_food_diary_entry(recipe.to_dict())
+        add_food_library_entry(recipe.to_dict(), replace=True)
     else:
         recipe += ingredient
         recipe.name = recipe_name
         recipe.brand = "(recipe)"
 
-    add_food_library_entry(recipe.to_dict(), replace=true)
+    add_food_library_entry(recipe.to_dict(), replace=True)

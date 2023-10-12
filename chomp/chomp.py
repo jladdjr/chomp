@@ -69,6 +69,8 @@ def main():
             weight(args.weight)
         elif args.func == lookup_food:
             lookup_food(args.food)
+        elif args.func == cook:
+            cook(args.recipe, args.ingredient, args.weight, args.percent)
         else:
             parser.print_help()
 

@@ -20,16 +20,17 @@ def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
     return library
 
 
-def add_food_library_entry(food, replace=true, library_file=DEFAULT_FOOD_LIBRARY):
+def add_food_library_entry(food, replace=True, library_file=DEFAULT_FOOD_LIBRARY):
     with open(library_file, "r") as f:
         library = load(f, Loader)
     if replace:
         food_name = food.get('name', '')
-        library = [i for i in library if i.get(name, '') != food_name]
+        library = [i for i in library if i.get('name', '') != food_name]
     library.append(food)
 
     with open(library_file, "w") as f:
-        f.write(library)
+        yaml_library = dump(library, Dumper=Dumper)
+        f.write(yaml_library)
 
 
 class FoodNotFoundException(Exception):
@@ -65,7 +66,7 @@ def get_food_diary():
     return data
 
 
-def write_food_diary(library_file=DEFAULT_FOOD_LIBRARY, data):
+def write_food_diary(data, library_file=DEFAULT_FOOD_LIBRARY):
     yaml_diary = dump(data, Dumper=Dumper)
     with open(library_file, "w") as f:
         f.write(yaml_diary)
