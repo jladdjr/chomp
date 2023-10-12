@@ -20,12 +20,16 @@ def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
     return library
 
 
-def add_food_library_entry(food):
-    food_diary = get_food_diary()
-    time_key = get_current_time_key()
-    diary_entry = {"food": food}
-    food_diary[time_key] = diary_entry
-    write_food_diary(food_diary)
+def add_food_library_entry(food, replace=true, library_file=DEFAULT_FOOD_LIBRARY):
+    with open(library_file, "r") as f:
+        library = load(f, Loader)
+    if replace:
+        food_name = food.get('name', '')
+        library = [i for i in library if i.get(name, '') != food_name]
+    library.append(food)
+
+    with open(library_file, "w") as f:
+        f.write(library)
 
 
 class FoodNotFoundException(Exception):
