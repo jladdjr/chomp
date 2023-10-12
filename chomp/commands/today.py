@@ -40,6 +40,11 @@ def today():
             combined_intake = food
         else:
             combined_intake += food
+
+    if combined_intake is None:
+        print("No food recorded for today!")
+        return
+
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
 
     print()
