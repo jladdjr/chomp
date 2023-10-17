@@ -22,7 +22,7 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
     if weight:
         ingredient_weight = ingredient.get_nutritional_fact('weight')
         percent = weight / ingredient_weight
-        print(f"Adding {ingredient_weight} grams of {ingredient_name} to {recipe_name} recipe")
+        print(f"Adding {weight} grams of {ingredient_name} to {recipe_name} recipe")
     elif abs(percent - 1) > 0.001:
         print(f"Adding {100 * percent:.1f}% of {ingredient_name} to {recipe_name} recipe")
     else:
