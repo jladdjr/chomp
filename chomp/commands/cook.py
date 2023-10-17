@@ -32,12 +32,11 @@ def cook(recipe_name, ingredient_name, weight=None, percent=1):
 
     if new_recipe:
         recipe = ingredient
-        recipe.name = recipe_name
-        recipe.brand = "(recipe)"
-        add_food_library_entry(recipe.to_dict(), replace=True)
     else:
         recipe += ingredient
-        recipe.name = recipe_name
-        recipe.brand = "(recipe)"
 
+    recipe.name = recipe_name
+    recipe.brand = "(recipe)"
+
+    # create or update recipe
     add_food_library_entry(recipe.to_dict(), replace=True)
