@@ -75,6 +75,8 @@ def main():
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
+        elif args.func == measure:
+            measure(args,food, args.calories)
         elif args.func == today:
             today()
         elif args.func == weight:

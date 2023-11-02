@@ -7,20 +7,15 @@ from chomp.data_manager import (
 )
 
 
-def measure(food_name, weight=None, percent=1):
-    if abs(percent - 1) < 0.001:
-        print(f"You ate {food_name}")
-    else:
-        print(f"You ate {100 * percent:.1f}% of {food_name}")
+def measure(food_name, desired_calories=None):
+    print(f"You would like to eat {desired_calories:.1f} {food_name}")
 
     try:
         food = get_food(food_name)
-        if weight:
-            food_weight = food.get_nutritional_fact('weight')
-            percent = weight / food_weight
-        food = food * percent
-        cal = round(food.get_nutritional_fact('calories'))
-        print(f"You ate {cal} calories!!")
-        add_food_diary_entry(food.to_dict())
+        food_weight = food.get_nutritional_fact('weight')
+        cal = food.get_nutritional_fact('calories')
+        required_weight = desired_calories * (cal / food_weight)
+
+        print(f"To do this, you need {required_weight}g.")
     except FoodNotFoundException:
         print(f"Cannot find {food_name}!")
