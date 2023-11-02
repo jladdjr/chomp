@@ -76,7 +76,7 @@ def main():
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
         elif args.func == measure:
-            measure(args,food, args.calories)
+            measure(args.food, args.calories)
         elif args.func == today:
             today()
         elif args.func == weight:
