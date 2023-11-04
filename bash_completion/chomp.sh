@@ -7,7 +7,7 @@ function _chomp () {
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	#prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-	foods=$(yq '[.[].name] | @csv' /home/jim/.chomp/food_library.yml | tr ',' ' ' | tr '"' ' ' | tr '\\' ' ')
+	foods=$(yq '[.[].name] | @csv' ~/.chomp/food_library.yml | tr ',' ' ' | tr '"' ' ' | tr '\\' ' ')
 	COMPREPLY=($(compgen -W '$foods' -- $cur))
 }
 

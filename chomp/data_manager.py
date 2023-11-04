@@ -3,9 +3,9 @@ from yaml import load, dump, Loader, Dumper
 from chomp.utils import get_current_time_key
 from chomp.food import Food
 
-DEFAULT_FOOD_LIBRARY = "/home/jim/.chomp/food_library.yml"
-DEFAULT_FOOD_DIARY = "/home/jim/.chomp/food_diary.yml"
-DEFAULT_WEIGHT_DIARY = "/home/jim/.chomp/weight_diary.yml"
+DEFAULT_FOOD_LIBRARY = "~/.chomp/food_library.yml"
+DEFAULT_FOOD_DIARY = "~/.chomp/food_diary.yml"
+DEFAULT_WEIGHT_DIARY = "~/.chomp/weight_diary.yml"
 
 # food library
 
