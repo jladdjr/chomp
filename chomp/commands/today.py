@@ -79,6 +79,6 @@ def today(short=False):
 
     lines = [
         ["Daily Calories", "Daily Fat", "Daily Protein", "Daily Carbs", "Cholesterol"],
-        [3058, "68 - 119g", 73, "344 - 497g", "Low as possible"],
+        [2290, "51 - 89g", 57, "258 - 372g", "Low as possible"],
     ]
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
