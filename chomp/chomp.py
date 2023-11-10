@@ -2,7 +2,7 @@
 
 import argparse
 
-from chomp.commands import eat, cook, measure, today, weight, lookup_food
+from chomp.commands import eat, cook, measure, stats, today, weight, lookup_food
 
 
 def main():
@@ -59,6 +59,10 @@ def main():
     parser_weight.add_argument("weight", type=float, help="today's weight")
     parser_weight.set_defaults(func=weight)
 
+    # stats subparser
+    parser_stats = subparsers.add_parser("stats", help="show statistics (currently limited to weight)")
+    parser_stats.set_defaults(func=stats)
+
     # food lookup subparser
     parser_food_lookup = subparsers.add_parser(
         "list_foods", help="get list of foods matching name or description"
@@ -81,6 +85,8 @@ def main():
             today()
         elif args.func == weight:
             weight(args.weight)
+        elif args.func == stats:
+            stats()
         elif args.func == lookup_food:
             lookup_food(args.food)
         elif args.func == cook:
