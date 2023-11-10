@@ -61,6 +61,9 @@ def main():
 
     # stats subparser
     parser_stats = subparsers.add_parser("stats", help="show statistics (currently limited to weight)")
+    parser_stats.add_argument("--days", type=int, default=30, help="(optional) number of days of history to include in report")
+    parser_stats.add_argument("--plotwidth", type=int, default=60, help="(optional) width of plot")
+    parser_stats.add_argument("--interactive", action='store_true', help="(optional) whether plot should be interactive")
     parser_stats.set_defaults(func=stats)
 
     # food lookup subparser
@@ -86,7 +89,7 @@ def main():
         elif args.func == weight:
             weight(args.weight)
         elif args.func == stats:
-            stats()
+            stats(args.days, args.plotwidth, args.interactive)
         elif args.func == lookup_food:
             lookup_food(args.food)
         elif args.func == cook:

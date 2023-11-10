@@ -3,23 +3,20 @@ from uniplot import plot
 from chomp.data_manager import get_weight_diary
 from chomp.utils import days_since_today
 
-def stats():
-
-    # TODO: expose as configurable option
-    num_days_to_show = 30
-
+def stats(days=30, plotwidth=60, interactive=False):
     data = get_weight_diary()
     datapoints = sorted(data.items())
 
-    x = 1
     xs = []
     ys = []
     for (x, y) in datapoints:
         days_ago = days_since_today(x)
-        if days_ago > num_days_to_show:
+        if days_ago > days:
             continue
 
-        xs.append(num_days_to_show - days_ago)
+        xs.append(days - days_ago)
         ys.append(y['weight'])
 
-    plot(ys, xs, interactive=True)
+    # yes, y's come first (likely because x's are optional)
+    # https://github.com/olavolav/uniplot/blob/814747125ee3be9ab87d2d932f6b310cc46ffad7/uniplot/uniplot.py#L14
+    plot(ys, xs, interactive=interactive, title=f"Weight Over Past {days} Days", width=plotwidth)
