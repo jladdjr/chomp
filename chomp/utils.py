@@ -10,3 +10,10 @@ def get_beginning_of_day_timestamp():
 
 def get_current_time_key():
     return str(int(time()))
+
+
+def days_since_today(timestamp):
+    now = datetime.now()
+    point_in_time = datetime.fromtimestamp(int(timestamp))
+
+    return (now - point_in_time).days
