@@ -10,7 +10,7 @@ test: venv
 coverage: venv
 	./venv/bin/pytest --verbose --cov-report term --cov-report xml --cov=chomp tests
 
-lint: venv
+black: venv
 	./venv/bin/black chomp tests
 
 clean:
