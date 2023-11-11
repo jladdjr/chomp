@@ -2,7 +2,7 @@ name: check-syntax-with-black
 run-name: Check syntax with Black
 on: [push]
 jobs:
-  apply-black-formatting:
+  check-formatting-with-black:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
