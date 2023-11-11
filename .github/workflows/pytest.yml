@@ -1,8 +1,8 @@
-name: check-syntax-with-black
-run-name: Check syntax with Black
+name: run-unittests-with-pytest
+run-name: Run Unit Tests with PyTest
 on: [push]
 jobs:
-  check-formatting-with-black:
+  run-unit-tests-with-pytest:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install Black
-        run: python -m pip install -U black
-      - name: Run Black
-        run: black --check chomp tests
+      - name: Prepare virtual environment
+        run: make venv
+      - name: Run unit tests
+        run: make test
