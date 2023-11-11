@@ -10,23 +10,27 @@ class Food:
 
     @classmethod
     def from_dict(cls, d):
-        if 'name' not in d:
+        if "name" not in d:
             raise MissingNutritionalData(f"'name' not provided for food entry: {d}")
-        if 'brand' not in d:
+        if "brand" not in d:
             raise MissingNutritionalData(f"'brand' not provided for food entry: {d}")
-        if 'nutritional_facts' not in d:
-            raise MissingNutritionalData(f"'nutritional_facts' section missing for food entry: {d}")
+        if "nutritional_facts" not in d:
+            raise MissingNutritionalData(
+                f"'nutritional_facts' section missing for food entry: {d}"
+            )
 
-        name = d['name']
-        brand = d['brand']
-        nutritional_facts = d['nutritional_facts']
+        name = d["name"]
+        brand = d["brand"]
+        nutritional_facts = d["nutritional_facts"]
 
         return Food(name, brand, nutritional_facts)
 
     def to_dict(self):
-        return {'name': self.name,
-                'brand': self.brand,
-                'nutritional_facts': self.nutritional_facts}
+        return {
+            "name": self.name,
+            "brand": self.brand,
+            "nutritional_facts": self.nutritional_facts,
+        }
 
     def get_nutritional_fact(self, fact):
         """Traverses nutritional data tree to find food fact.
@@ -43,25 +47,27 @@ class Food:
         ```
         `food.get_nutritional_fact('foo.bar')` would return `2`.
         """
+
         def _get_nutritional_facts(fact, tree):
-            subfact = ''
-            if '.' in fact:
-                fact, subfact = fact.split('.', maxsplit=1)
+            subfact = ""
+            if "." in fact:
+                fact, subfact = fact.split(".", maxsplit=1)
             for key, value in tree.items():
                 if key != fact:
                     continue
-                if subfact != '':
+                if subfact != "":
                     if type(value) != dict:
                         return None
                     return _get_nutritional_facts(subfact, value)
                 if type(value) is dict:
                     return None
                 return value
-        return _get_nutritional_facts(fact, self.nutritional_facts)
 
+        return _get_nutritional_facts(fact, self.nutritional_facts)
 
     def __mul__(self, scale):
         """Scale nutritional data"""
+
         def _scale_nutritional_facts(facts, scale):
             scaled_facts = dict()
 
@@ -84,7 +90,9 @@ class Food:
 
         def _merge_nutritional_facts(first_fact_set, second_fact_set):
             # copy all entries from first_fact_set except nested dictionaries
-            combined_facts = {k:v for (k,v) in first_fact_set.items() if type(k) is not dict}
+            combined_facts = {
+                k: v for (k, v) in first_fact_set.items() if type(k) is not dict
+            }
 
             # merge in entries from second_fact_set, ignoring nested dictionaries
             for key, value in second_fact_set.items():
@@ -117,6 +125,7 @@ class Food:
 
             return combined_facts
 
-        merged_nutritional_facts = _merge_nutritional_facts(self.nutritional_facts,
-                                                            other.nutritional_facts)
-        return Food('Combined Foods', '', merged_nutritional_facts)
+        merged_nutritional_facts = _merge_nutritional_facts(
+            self.nutritional_facts, other.nutritional_facts
+        )
+        return Food("Combined Foods", "", merged_nutritional_facts)

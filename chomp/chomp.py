@@ -24,7 +24,9 @@ def main():
     parser_eat.set_defaults(func=eat)
 
     # measure subparser
-    parser_eat = subparsers.add_parser("measure", help="determines how much food will yield a given amount of calories")
+    parser_eat = subparsers.add_parser(
+        "measure", help="determines how much food will yield a given amount of calories"
+    )
     parser_eat.add_argument("food", type=str, help="food that you would like to eat")
     parser_eat.add_argument(
         "--calories",
@@ -36,9 +38,13 @@ def main():
     parser_eat.set_defaults(func=measure)
 
     # cook subparser
-    parser_cook = subparsers.add_parser("cook", help="adds an ingredient to a recipe (starting a new recipe if needed)")
+    parser_cook = subparsers.add_parser(
+        "cook", help="adds an ingredient to a recipe (starting a new recipe if needed)"
+    )
     parser_cook.add_argument("recipe", type=str, help="name of recipe")
-    parser_cook.add_argument("ingredient", type=str, help="ingredient name (must exist in food library)")
+    parser_cook.add_argument(
+        "ingredient", type=str, help="ingredient name (must exist in food library)"
+    )
     parser_cook.add_argument(
         "--percent",
         type=float,
@@ -46,7 +52,10 @@ def main():
         help="(optional) specify portion of ingredient (where 1.0 is a std portion)",
     )
     parser_cook.add_argument(
-        "--weight", type=float, default=None, help="(optional) specify weight of ingredient"
+        "--weight",
+        type=float,
+        default=None,
+        help="(optional) specify weight of ingredient",
     )
     parser_cook.set_defaults(func=cook)
 
@@ -60,10 +69,23 @@ def main():
     parser_weight.set_defaults(func=weight)
 
     # stats subparser
-    parser_stats = subparsers.add_parser("stats", help="show statistics (currently limited to weight)")
-    parser_stats.add_argument("--days", type=int, default=30, help="(optional) number of days of history to include in report")
-    parser_stats.add_argument("--plotwidth", type=int, default=60, help="(optional) width of plot")
-    parser_stats.add_argument("--interactive", action='store_true', help="(optional) whether plot should be interactive")
+    parser_stats = subparsers.add_parser(
+        "stats", help="show statistics (currently limited to weight)"
+    )
+    parser_stats.add_argument(
+        "--days",
+        type=int,
+        default=30,
+        help="(optional) number of days of history to include in report",
+    )
+    parser_stats.add_argument(
+        "--plotwidth", type=int, default=60, help="(optional) width of plot"
+    )
+    parser_stats.add_argument(
+        "--interactive",
+        action="store_true",
+        help="(optional) whether plot should be interactive",
+    )
     parser_stats.set_defaults(func=stats)
 
     # food lookup subparser
@@ -82,7 +104,7 @@ def main():
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
-            print('------------------------------')
+            print("------------------------------")
             today(short=True)
         elif args.func == measure:
             measure(args.food, args.calories)

@@ -11,14 +11,15 @@ DEFAULT_WEIGHT_DIARY = expanduser("~/.chomp/weight_diary.yml")
 
 # food library
 
+
 def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
     with open(library_file, "r") as f:
         items = load(f, Loader)
     library = {}
     for item in items:
-        if 'name' not in item:
+        if "name" not in item:
             continue
-        library[item['name']] = Food.from_dict(item)
+        library[item["name"]] = Food.from_dict(item)
     return library
 
 
@@ -26,8 +27,8 @@ def add_food_library_entry(food, replace=True, library_file=DEFAULT_FOOD_LIBRARY
     with open(library_file, "r") as f:
         library = load(f, Loader)
     if replace:
-        food_name = food.get('name', '')
-        library = [i for i in library if i.get('name', '') != food_name]
+        food_name = food.get("name", "")
+        library = [i for i in library if i.get("name", "") != food_name]
     library.append(food)
 
     with open(library_file, "w") as f:

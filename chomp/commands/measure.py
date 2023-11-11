@@ -12,8 +12,8 @@ def measure(food_name, desired_calories=None):
 
     try:
         food = get_food(food_name)
-        food_weight = food.get_nutritional_fact('weight')
-        cal = food.get_nutritional_fact('calories')
+        food_weight = food.get_nutritional_fact("weight")
+        cal = food.get_nutritional_fact("calories")
         required_weight = desired_calories * (cal / food_weight)
 
         print(f"To do this, you need {required_weight}g.")

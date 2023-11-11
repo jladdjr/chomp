@@ -14,10 +14,10 @@ def eat(food_name, weight=None, percent=1):
     try:
         food = get_food(food_name)
         if weight:
-            food_weight = food.get_nutritional_fact('weight')
+            food_weight = food.get_nutritional_fact("weight")
             percent = weight / food_weight
         food = food * percent
-        cal = round(food.get_nutritional_fact('calories'))
+        cal = round(food.get_nutritional_fact("calories"))
         print(f"You ate {cal} calories!!")
         add_food_diary_entry(food.to_dict())
     except FoodNotFoundException:
