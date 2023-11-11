@@ -10,7 +10,7 @@ from chomp.data_manager import (
 from chomp.utils import get_beginning_of_day_timestamp
 
 
-def today():
+def today(short=False):
     food_diary = get_food_diary()
     start_of_day = get_beginning_of_day_timestamp()
 
@@ -43,6 +43,10 @@ def today():
 
     if combined_intake is None:
         print("No food recorded for today!")
+        return
+
+    if short:
+        print(f"Total calories for today: {int(combined_intake.get_nutritional_fact('calories')):4}")
         return
 
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
