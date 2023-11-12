@@ -12,6 +12,7 @@ def stats(days=30, plotwidth=60, interactive=False, num_days_to_average=7):
     if len(datapoints) < num_days_to_average:
         print(f"Only found {len(datapoints)} of weight data.")
         print(f"Creating graph of actual weight points instead of moving average.")
+        print()
         num_days_to_average = 1
         title = (f"Weight Over Past {days} Days",)
     else:
