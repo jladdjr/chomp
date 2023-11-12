@@ -86,6 +86,12 @@ def main():
         action="store_true",
         help="(optional) whether plot should be interactive",
     )
+    parser_stats.add_argument(
+        "--num-days-to-average",
+        type=int,
+        default=7,
+        help="(optional) number of days to average in moving average plot of weight",
+    )
     parser_stats.set_defaults(func=stats)
 
     # food lookup subparser
@@ -113,7 +119,7 @@ def main():
         elif args.func == weight:
             weight(args.weight)
         elif args.func == stats:
-            stats(args.days, args.plotwidth, args.interactive)
+            stats(args.days, args.plotwidth, args.interactive, args.num_days_to_average)
         elif args.func == lookup_food:
             lookup_food(args.food)
         elif args.func == cook:
