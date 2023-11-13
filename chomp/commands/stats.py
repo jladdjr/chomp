@@ -36,6 +36,8 @@ def stats(days=30, plotwidth=60, interactive=False, num_days_to_average=7):
         if len(trailing_xs) > num_days_to_average:
             trailing_xs.pop(0)
             trailing_ys.pop(0)
+        if len(trailing_xs) != num_days_to_average:
+            continue
 
         x_avg = sum(trailing_xs) / num_days_to_average
         x_avg_in_days = days_since_today(x_avg)
