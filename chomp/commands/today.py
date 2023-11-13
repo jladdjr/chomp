@@ -7,6 +7,7 @@ from chomp.food import Food
 from chomp.data_manager import (
     get_food_diary,
 )
+from chomp.config_manager import get_nutritional_targets
 from chomp.utils import get_beginning_of_day_timestamp
 
 
@@ -77,8 +78,21 @@ def today(short=False):
     )
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
 
-    lines = [
-        ["Daily Calories", "Daily Fat", "Daily Protein", "Daily Carbs", "Cholesterol"],
-        [3058, "68 - 119g", 73, "344 - 497g", "Low as possible"],
-    ]
-    print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
+    targets = get_nutritional_targets()
+    if targets:
+        calories = targets.get("calories", 0)
+        fat = targets.get("fat", 0)
+        protein = targets.get("protein", 0)
+        carbs = targets.get("carbs", 0)
+        cholesterol = targets.get("cholesterol", 0)
+        lines = [
+            [
+                "Daily Calories",
+                "Daily Fat",
+                "Daily Protein",
+                "Daily Carbs",
+                "Daily Cholesterol",
+            ],
+            [calories, fat, protein, carbs, cholesterol],
+        ]
+        print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))

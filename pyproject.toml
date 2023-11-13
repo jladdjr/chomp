@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "chomp"
-version = "0.0.21"
+version = "0.0.22"
 description = "Calorie-counting app"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -16,6 +16,7 @@ classifiers = [
 dependencies = [
     "pyyaml",
     "tabulate",
+    "tomlkit",
     "openfoodfacts"
 ]
 

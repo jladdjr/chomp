@@ -30,7 +30,7 @@ def stats(days=30, plotwidth=60, interactive=False, num_days_to_average=7):
             continue
 
         trailing_xs.append(int(x))
-        trailing_ys.append(int(y["weight"]))
+        trailing_ys.append(float(y["weight"]))
         if len(trailing_xs) < num_days_to_average:
             continue
         if len(trailing_xs) > num_days_to_average:
