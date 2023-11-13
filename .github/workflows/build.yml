@@ -1,0 +1,20 @@
+name: build-wheel
+run-name: Build Wheel
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  build-wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Prepare Python Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Prepare virtual environment
+        run: make venv
+      - name: Build wheel
+        run: make build
