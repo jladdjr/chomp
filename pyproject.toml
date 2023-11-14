@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "chomp"
+name = "chompchomp"
 version = "0.0.22"
 description = "Calorie-counting app"
 readme = "README.md"
