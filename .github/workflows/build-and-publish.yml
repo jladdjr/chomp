@@ -1,5 +1,5 @@
-name: build-wheel
-run-name: Build Wheel
+name: build-and-publish-release
+run-name: Build Wheel, Create GitHub Release, Publish to PyPI
 on:
   push:
     tags:
@@ -18,7 +18,12 @@ jobs:
         run: make venv
       - name: Build wheel
         run: make build
-      - name: Create Release
+      - name: Create GitHub Release
         run: gh release create ${GITHUB_REF_NAME} dist/chomp-${GITHUB_REF_NAME}-py3-none-any.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create PyPI Release
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secret.pypi_token }}
