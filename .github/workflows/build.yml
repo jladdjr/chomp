@@ -19,6 +19,6 @@ jobs:
       - name: Build wheel
         run: make build
       - name: Create Release
-        run: gh release create ${{ github.ref }} dist/chomp-${{ github.ref }}-py3-none-any.whl
+        run: gh release create ${GITHUB_REF_NAME} dist/chomp-${GITHUB_REF_NAME}-py3-none-any.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
