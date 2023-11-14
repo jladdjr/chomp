@@ -24,3 +24,6 @@ install:
 	pip install dist/chomp-$$(grep version pyproject.toml | cut -f2 -d\")-py3-none-any.whl
 
 build_and_install: build install
+
+upload:
+	twine upload dist/*
