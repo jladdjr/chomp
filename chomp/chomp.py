@@ -110,7 +110,7 @@ def main():
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
-            print("------------------------------")
+            print("")
             today(short=True)
         elif args.func == measure:
             measure(args.food, args.calories)
