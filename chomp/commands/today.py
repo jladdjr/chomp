@@ -3,6 +3,7 @@ from datetime import datetime
 
 from tabulate import tabulate
 
+from chomp.config_manager import get_nutritional_targets
 from chomp.food import Food
 from chomp.data_manager import (
     get_food_diary,
@@ -49,9 +50,23 @@ def today(short=False):
         return
 
     if short:
+        total_calories = int(combined_intake.get_nutritional_fact("calories"))
+        target_calories = int(get_nutritional_targets().get("calories", 0))
+        remaining_calories = target_calories - total_calories
         print(
-            f"Total calories for today: {int(combined_intake.get_nutritional_fact('calories')):4}"
+            f"Total calories for today:      {int(combined_intake.get_nutritional_fact('calories')):4}"
         )
+        if target_calories:
+            if remaining_calories > 0:
+                print(
+                    f"Remaining calories for today:  {remaining_calories:4} (out of {target_calories})"
+                )
+            elif remaining_calories == 0:
+                print(f"No more calories left today!")
+            else:
+                print(
+                    f"Calories consumed beyond goal: {-1 * remaining_calories:4} (goal was {target_calories})"
+                )
         return
 
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
