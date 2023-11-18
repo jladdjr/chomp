@@ -7,8 +7,8 @@ from chomp.data_manager import (
 )
 
 
-def measure(food_name, desired_calories=None):
-    print(f"You would like to eat {desired_calories:.1f} calories of {food_name}")
+def measure(food_name, desired_calories=100):
+    print(f"You would like to eat {desired_calories:.1f} calories of {food_name}.")
 
     try:
         food = get_food(food_name)

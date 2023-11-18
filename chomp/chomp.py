@@ -32,8 +32,8 @@ def main():
         "--calories",
         type=float,
         default=100,
-        required=True,
-        help="(optional) specify desired number of calories",
+        required=False,
+        help="(optional) specify desired number of calories (default: 100)",
     )
     parser_eat.set_defaults(func=measure)
 
