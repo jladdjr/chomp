@@ -8,7 +8,7 @@ from chomp.data_manager import (
 
 
 def measure(food_name, desired_calories=None):
-    print(f"You would like to eat {desired_calories:.1f} {food_name}")
+    print(f"You would like to eat {desired_calories:.1f} calories of {food_name}")
 
     try:
         food = get_food(food_name)
@@ -16,6 +16,7 @@ def measure(food_name, desired_calories=None):
         cal = food.get_nutritional_fact("calories")
         required_weight = desired_calories * (food_weight / cal)
 
-        print(f"To do this, you need {required_weight}g.")
+        print("")
+        print(f"To do this, you should eat {required_weight:.1f}g.")
     except FoodNotFoundException:
         print(f"Cannot find {food_name}!")
