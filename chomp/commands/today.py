@@ -17,7 +17,16 @@ def today(short=False):
     start_of_day = get_beginning_of_day_timestamp()
 
     lines = [
-        ["Time of Day", "Food", "Calories", "Fat", "Protein", "Carbs", "Cholesterol"]
+        [
+            "Time of Day",
+            "Food",
+            "Calories",
+            "Fat",
+            "Protein",
+            "Carbs",
+            "Cholesterol",
+            "Caffeine",
+        ]
     ]
 
     combined_intake = None
@@ -33,12 +42,15 @@ def today(short=False):
         time_of_day = datetime.fromtimestamp(int(timestamp))
         food = Food.from_dict(entry["food"])
         name = food.name
-        calories = round(food.get_nutritional_fact("calories"))
+        calories = round(food.get_nutritional_fact("calories") or 0)
         fat = round(food.get_nutritional_fact("fat.total") or 0)
         protein = round(food.get_nutritional_fact("protein") or 0)
         carbs = round(food.get_nutritional_fact("carbohydrates.total") or 0)
-        cholesterol = round(food.get_nutritional_fact("cholesterol"), 3) or 0
-        lines.append([time_of_day, name, calories, fat, protein, carbs, cholesterol])
+        cholesterol = round(food.get_nutritional_fact("cholesterol") or 0, 3)
+        caffeine = round(food.get_nutritional_fact("caffeine") or 0, 3)
+        lines.append(
+            [time_of_day, name, calories, fat, protein, carbs, cholesterol, caffeine]
+        )
 
         if combined_intake is None:
             combined_intake = food
@@ -80,15 +92,17 @@ def today(short=False):
             "Total Protein",
             "Total Carbs",
             "Total Cholesterol",
+            "Total Caffeine",
         ]
     ]
     lines.append(
         [
-            round(combined_intake.get_nutritional_fact("calories")),
-            round(combined_intake.get_nutritional_fact("fat.total")),
-            round(combined_intake.get_nutritional_fact("protein")),
-            round(combined_intake.get_nutritional_fact("carbohydrates.total")),
-            round(combined_intake.get_nutritional_fact("cholesterol"), 3),
+            round(combined_intake.get_nutritional_fact("calories") or 0),
+            round(combined_intake.get_nutritional_fact("fat.total") or 0),
+            round(combined_intake.get_nutritional_fact("protein") or 0),
+            round(combined_intake.get_nutritional_fact("carbohydrates.total") or 0),
+            round(combined_intake.get_nutritional_fact("cholesterol") or 0, 3),
+            round(combined_intake.get_nutritional_fact("caffeine") or 0, 3),
         ]
     )
     print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
@@ -100,6 +114,7 @@ def today(short=False):
         protein = targets.get("protein", 0)
         carbs = targets.get("carbs", 0)
         cholesterol = targets.get("cholesterol", 0)
+        caffeine = targets.get("caffeine", 0)
         lines = [
             [
                 "Daily Calories",
@@ -107,7 +122,8 @@ def today(short=False):
                 "Daily Protein",
                 "Daily Carbs",
                 "Daily Cholesterol",
+                "Daily Caffeine",
             ],
-            [calories, fat, protein, carbs, cholesterol],
+            [calories, fat, protein, carbs, cholesterol, caffeine],
         ]
         print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
