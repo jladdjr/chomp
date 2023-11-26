@@ -110,7 +110,7 @@ def main():
         # TODO: There's got to be a better way to map arguments received to the command functions
         if args.func == eat:
             eat(args.food, args.weight, args.percent)
-            print("")
+            print()
             today(short=True)
         elif args.func == measure:
             measure(args.food, args.calories)
@@ -118,6 +118,8 @@ def main():
             today()
         elif args.func == weight:
             weight(args.weight)
+            print()
+            stats()
         elif args.func == stats:
             stats(args.days, args.plotwidth, args.interactive, args.num_days_to_average)
         elif args.func == lookup_food:

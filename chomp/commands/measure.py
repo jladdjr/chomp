@@ -16,7 +16,7 @@ def measure(food_name, desired_calories=100):
         cal = food.get_nutritional_fact("calories")
         required_weight = desired_calories * (food_weight / cal)
 
-        print("")
+        print()
         print(f"To do this, you should eat {required_weight:.1f}g.")
     except FoodNotFoundException:
         print(f"Cannot find {food_name}!")
