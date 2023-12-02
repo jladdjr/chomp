@@ -2,7 +2,7 @@
 
 import argparse
 
-from chomp.commands import eat, cook, measure, stats, today, weight, lookup_food
+from chomp.commands import eat, cook, measure, search, stats, today, weight, lookup_food
 
 
 def main():
@@ -22,6 +22,13 @@ def main():
         "--weight", type=float, default=None, help="(optional) specify weight"
     )
     parser_eat.set_defaults(func=eat)
+
+    # search subparser
+    parser_search = subparsers.add_parser(
+        "search", help="search for an item in your food library"
+    )
+    parser_search.add_argument("name", type=str, help="food name to search for")
+    parser_search.set_defaults(func=search)
 
     # measure subparser
     parser_eat = subparsers.add_parser(
@@ -112,6 +119,8 @@ def main():
             eat(args.food, args.weight, args.percent)
             print()
             today(short=True)
+        if args.func == search:
+            search(args.name)
         elif args.func == measure:
             measure(args.food, args.calories)
         elif args.func == today:
