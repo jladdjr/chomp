@@ -23,6 +23,11 @@ def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
     return library
 
 
+def get_food_list():
+    library = get_food_library()
+    return library.keys()
+
+
 def add_food_library_entry(food, replace=True, library_file=DEFAULT_FOOD_LIBRARY):
     with open(library_file, "r") as f:
         library = load(f, Loader)
