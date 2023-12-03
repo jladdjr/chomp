@@ -127,3 +127,8 @@ def today(short=False):
             [calories, fat, protein, carbs, cholesterol, caffeine],
         ]
         print(tabulate(lines, headers="firstrow", tablefmt="rounded_outline"))
+
+        consumed_calories = combined_intake.get_nutritional_fact("calories") or 0
+        remaining_calories = calories - consumed_calories
+        if remaining_calories > 0:
+            print(f"\nYou have {round(remaining_calories)} calories left today.")
