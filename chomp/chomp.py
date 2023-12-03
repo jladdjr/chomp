@@ -119,7 +119,7 @@ def main():
             eat(args.food, args.weight, args.percent)
             print()
             today(short=True)
-        if args.func == search:
+        elif args.func == search:
             search(args.name)
         elif args.func == measure:
             measure(args.food, args.calories)
