@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import timedelta
 from time import time
 
 
@@ -16,4 +17,4 @@ def days_since_today(timestamp):
     now = datetime.now()
     point_in_time = datetime.fromtimestamp(int(timestamp))
 
-    return (now - point_in_time).days
+    return (now - point_in_time) / timedelta(days=1)
