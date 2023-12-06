@@ -38,9 +38,9 @@ def main():
     parser_eat.add_argument(
         "--calories",
         type=float,
-        default=100,
+        default=None,
         required=False,
-        help="(optional) specify desired number of calories (default: 100)",
+        help="(optional) specify desired number of calories (default: remaining calories for day)",
     )
     parser_eat.set_defaults(func=measure)
 
