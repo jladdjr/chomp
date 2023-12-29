@@ -14,7 +14,7 @@ def main():
     parser_eat.add_argument(
         "food",
         type=str,
-        help="food that you ate (alternatively, can use raw number of calories)",
+        help="food that you ate (alternatively, can specify raw calorie count)",
     )
     parser_eat.add_argument(
         "--percent",
