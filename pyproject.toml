@@ -2,9 +2,12 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["chomp"]
+
 [project]
 name = "chompchomp"
-version = "0.5.0"
+version = "0.5.1"
 description = "Calorie-counting app"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -16,8 +19,9 @@ classifiers = [
 dependencies = [
     "pyyaml",
     "tabulate",
+    "uniplot",
     "tomlkit",
-    "openfoodfacts"
+    "openfoodfacts",
 ]
 
 [project.scripts]
