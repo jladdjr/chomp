@@ -11,7 +11,11 @@ def main():
 
     # eat subparser
     parser_eat = subparsers.add_parser("eat", help="adds a meal to your food diary")
-    parser_eat.add_argument("food", type=str, help="food that you ate")
+    parser_eat.add_argument(
+        "food",
+        type=str,
+        help="food that you ate (alternatively, can specify raw calorie count)",
+    )
     parser_eat.add_argument(
         "--percent",
         type=float,
