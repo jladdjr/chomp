@@ -1,18 +1,33 @@
-from yaml import load, dump, Loader, Dumper
-
 from os.path import expanduser
+import sqlite3
+
+from yaml import load, dump, Loader, Dumper
 
 from chomp.utils import get_current_time_key
 from chomp.food import Food
 
-DEFAULT_FOOD_LIBRARY = expanduser("~/.chomp/food_library.yml")
-DEFAULT_FOOD_DIARY = expanduser("~/.chomp/food_diary.yml")
-DEFAULT_WEIGHT_DIARY = expanduser("~/.chomp/weight_diary.yml")
+
+_con = None
+def _get_or_create_db_connection():
+    global _con
+    if _con is not None:
+        return _con
+
+    _con = sqlite3.connect("~/.chomp/db.sql")
+    _ensure_db_initialized()
+    return _con
+
+def _ensure_db_initialized():
+    pass
 
 # food library
 
 
 def get_food_library(library_file=DEFAULT_FOOD_LIBRARY):
+    _con = _get_or_create_db_connection()
+    cur = _con.cursor()
+
+    
     with open(library_file, "r") as f:
         items = load(f, Loader)
     library = {}
